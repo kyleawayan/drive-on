@@ -4,11 +4,9 @@
   position: fixed;
   background: rgba(0, 0, 0, 0.6);
   color: white;
-  width: 25%;
+  width: 20%;
   height: calc(100% - 55px);
   display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   z-index: 2;
   border-radius: 25px;
@@ -23,21 +21,37 @@
   }
 }
 
-@media only screen and (max-width: 1023px) {
+@media only screen and (max-width: 1200px) {
   .box {
     margin: 10px;
-    padding: 10px;
-    position: fixed;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
     width: calc(100% - 20px);
     bottom: 20px;
     height: 25%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 2;
     border-radius: 25px;
   }
 }
+
+.text {
+    padding: 20px;
+    justify-content: normal;
+    align-items: normal;
+}
+
+/* thank you Lucas Oliveira for the fancy input text box! https://codepen.io/lucasyem/pen/ZEEYKdj */
+.form {
+    font-family: inherit;
+    border: 0;
+    border-bottom: 2px solid grey;
+    outline: 0;
+    color: white;
+    width: calc(100% - 55px);
+    padding: 6px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    font-size: 2rem;
+    margin-left: 5px;
+  }
+  
+  .form:focus {
+    border-bottom: 2px solid white;
+  }

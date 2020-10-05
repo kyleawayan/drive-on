@@ -1,9 +1,44 @@
+@font-face {
+  src: url("fonts/FormaDJRText-Regular.eot");
+  src: url("fonts/FormaDJRText-Regular.eot?#") format("embedded-opentype"),
+    url("fonts/FormaDJRText-Regular.woff2") format("woff2"),
+    url("fonts/FormaDJRText-Regular.woff") format("woff");
+  font-family: "FormaDJRText";
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  src: url("fonts/FormaDJRBanner-Italic.eot");
+  src: url("fonts/FormaDJRBanner-Italic.eot?#") format("embedded-opentype"),
+    url("fonts/FormaDJRBanner-Italic.woff2") format("woff2"),
+    url("fonts/FormaDJRBanner-Italic.woff") format("woff");
+  font-family: "FormaDJRBanner";
+  font-weight: 400;
+}
+
+@font-face {
+  src: url('fonts/FormaDJRText-Bold.eot'); /* IE < 9 */
+  src: url('fonts/FormaDJRText-Bold.eot?#') format("embedded-opentype"), /* IE 9 */
+       url('fonts/FormaDJRText-Bold.woff2') format("woff2"),
+       url('fonts/FormaDJRText-Bold.woff') format("woff");
+  font-family: 'FormaDJRText';
+  font-style: normal;
+  font-weight: bold;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "FormaDJRText";
+}
+
+
+h1 {
+  font-family: "FormaDJRBanner";
+  font-weight: 400;
+  margin: 5px;
 }
 
 a {
