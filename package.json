@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "next": "9.5.3",
+    "node-fetch": "^2.6.1",
     "random-streetview": "^1.0.10",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-google-maps": "^9.4.5"
+    "react-google-maps": "^9.4.5",
+    "xml2js": "^0.4.23"
   }
 }

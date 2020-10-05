@@ -1,4 +1,4 @@
-import styles from "../styles/Home.module.css";
+const fetch = require("node-fetch");
 import {
   withScriptjs,
   withGoogleMap,
@@ -8,9 +8,11 @@ import {
 } from "react-google-maps";
 // https://www.creative-tim.com/learning-lab/nextjs/react-google-maps/material-dashboard
 
-export default function Home() {
-  const defaultCenter = { lat: 40.748817, lng: -73.985428 };
-
+export default function Map({ location }) {
+  const defaultCenter = {
+    lat: parseFloat(location.lat),
+    lng: parseFloat(location.long),
+  };
   const MyMapComponent = withScriptjs(
     withGoogleMap((props) => (
       <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}>
@@ -34,4 +36,11 @@ export default function Home() {
       mapElement={<div style={mapElementStyle} />}
     />
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`http://localhost:3000/api/getrandomstreetview`);
+  const location = await res.json();
+
+  return { props: { location } };
 }
