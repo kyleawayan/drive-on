@@ -1,3 +1,4 @@
+import absoluteUrl from "next-absolute-url";
 const fetch = require("node-fetch");
 import {
   withScriptjs,
@@ -38,8 +39,9 @@ export default function Map({ location }) {
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`http://localhost:3000/api/getrandomstreetview`);
+export async function getServerSideProps({ req }) {
+  const { origin } = absoluteUrl(req);
+  const res = await fetch(`${origin}/api/getrandomstreetview`);
   const location = await res.json();
 
   return { props: { location } };

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "next": "9.5.3",
+    "next-absolute-url": "^1.2.2",
     "node-fetch": "^2.6.1",
     "random-streetview": "^1.0.10",
     "react": "16.13.1",
