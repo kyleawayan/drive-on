@@ -51,6 +51,8 @@ export default function Game() {
 
   socket.on("newuser", function (data) {
     console.log(data);
+    var joined = players.concat(data);
+    setPlayers(joined);
   });
 
   return (
