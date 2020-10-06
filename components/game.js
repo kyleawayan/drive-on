@@ -12,7 +12,9 @@ import {
 } from "react-google-maps";
 
 const io = require("socket.io-client");
-const socket = io("https://drive-on-server.herokuapp.com");
+const socket = io("https://drive-on-server.herokuapp.com", {
+  transport: ["websocket"],
+});
 console.log("connecting");
 
 export default function Game() {
