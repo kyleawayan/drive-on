@@ -3,7 +3,7 @@ const geolib = require("geolib");
 
 const options = {
   provider: "google",
-  apiKey: "AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw", // for Mapquest, OpenCage, Google Premier
+  apiKey: process.env.finddistancegooglekey, // for Mapquest, OpenCage, Google Premier
   formatter: null, // 'gpx', 'string', ...
 };
 
