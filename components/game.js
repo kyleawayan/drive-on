@@ -14,6 +14,7 @@ export default function Game() {
   const [hideMakeLobby, setHideMakeLobby] = useState(styles.makelobby);
   const [showLobby, setShowLobby] = useState(styles.hidden);
   const [players, setPlayers] = useState([]);
+  const [id, setId] = useState("");
   let playersArr = [players];
 
   useEffect(() => {
@@ -29,8 +30,6 @@ export default function Game() {
     setUsername(event.target.value);
   }
 
-  var id = "";
-
   function putUsername() {
     setHideMakeLobby(styles.hidden);
     setShowLobby(styles.lobby);
@@ -41,11 +40,13 @@ export default function Game() {
       socket.emit("room", id);
       playersArr.push(username);
       setPlayers(playersArr);
+      setId(id);
     } else {
       // joining existing server (player)
       socket.emit("room", router.query.id);
-      console.log(id, username)
-      socket.emit("newuser", {   room: router.query.id , username: username   });
+      setId(router.query.id);
+      console.log(id, username);
+      socket.emit("newuser", { room: router.query.id, username: username });
     }
   }
 
@@ -65,7 +66,22 @@ export default function Game() {
         shallow: true,
       }
     );
+    socket.emit("newlocation", {
+      room: id,
+      lat: location.lat,
+      lng: location.long,
+    });
   }
+
+  socket.on("newlocation", function ({ lat, lng }) {
+    router.push(
+      `/multiplayer?lat=${lat}&lng=${lng}`,
+      `/multiplayer?lat=${lat}&lng=${lng}`,
+      {
+        shallow: true,
+      }
+    );
+  });
 
   return (
     <div className={styles.box}>
