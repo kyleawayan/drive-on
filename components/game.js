@@ -35,18 +35,21 @@ export default function Game() {
     setHideMakeLobby(styles.hidden);
     setShowLobby(styles.lobby);
     if (router.query.id == undefined) {
+      // new game (host)
       var id = nanoid(5);
       router.push("/multiplayer", `/multiplayer?id=${id}`, { shallow: true });
       socket.emit("room", id);
+      playersArr.push(username);
+      setPlayers(playersArr);
     } else {
+      // joining existing server (player)
       socket.emit("room", router.query.id);
+      console.log(id, username)
+      socket.emit("newuser", {   room: router.query.id , username: username   });
     }
-    socket.emit("event", username);
-    playersArr.push(username);
-    setPlayers(playersArr);
   }
 
-  socket.on("event", function (data) {
+  socket.on("newuser", function (data) {
     console.log(data);
   });
 
