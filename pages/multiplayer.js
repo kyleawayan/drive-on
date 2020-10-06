@@ -6,7 +6,7 @@ import {
   withGoogleMap,
   GoogleMap,
   StreetViewPanorama,
-  OverlayView,
+  Marker,
 } from "react-google-maps";
 // https://www.creative-tim.com/learning-lab/nextjs/react-google-maps/material-dashboard
 import Game from "../components/game";
@@ -48,7 +48,9 @@ export default function Map({ location }) {
 
   const MiniMap = withScriptjs(
     withGoogleMap((props) => (
-      <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}></GoogleMap>
+      <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}>
+        <Marker position={{ lat: -34.397, lng: 150.644 }} />
+      </GoogleMap>
     ))
   );
 
@@ -58,7 +60,7 @@ export default function Map({ location }) {
 
   
   const loadingElementStyle2 = { height: "100%" };
-  const containerElementStyle2 = { height: `400px` };
+  const containerElementStyle2 = { height: `600px` };
   const mapElementStyle2 = { height: "50%" };
 
   return (
@@ -70,14 +72,6 @@ export default function Map({ location }) {
         containerElement={<div style={containerElementStyle} />}
         mapElement={<div style={mapElementStyle} />}
       />
-      <div className="minimap">
-        <MiniMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
-          loadingElement={<div style={loadingElementStyle2} />}
-          containerElement={<div style={containerElementStyle2} />}
-          mapElement={<div style={mapElementStyle2} />}
-        />
-      </div>
     </div>
   );
 }

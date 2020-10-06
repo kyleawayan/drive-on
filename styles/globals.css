@@ -52,10 +52,9 @@ a {
 }
 
 .minimap {
-position: relative;
-bottom: 230px;
-z-index: 2;
-right: 25px;
-float: right;
-width: 20%;
+  position: relative;
+  z-index: 2;
+  float: right;
+  width: 25%;
+  height: 100vh
 }

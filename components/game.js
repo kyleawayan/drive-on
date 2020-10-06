@@ -3,6 +3,13 @@ import styles from "../styles/game.module.css";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 const fetch = require("node-fetch");
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  StreetViewPanorama,
+  Marker,
+} from "react-google-maps";
 
 const io = require("socket.io-client");
 const socket = io("http://localhost:8000");
@@ -19,9 +26,37 @@ export default function Game() {
   const [id, setId] = useState("");
   const [guess, setGuess] = useState("");
   const guessRef = useRef(guess);
+  const [lat, setLat] = useState(38.044712);
+  const [lng, setLng] = useState(-122.162265);
   guessRef.current = guess;
   const [guessesIn, setGuessesIn] = useState(0);
   let playersArr = [players];
+
+  useEffect(() => {
+    console.log(router.query.id);
+    if (router.query.lat !== undefined) {
+      setLat(parseFloat(router.query.lat));
+      setLng(parseFloat(router.query.lng));
+      console.log(router.query.lat, router.query.lng);
+    }
+  });
+  console.log(lat, lng);
+  const defaultCenter = {
+    lat: lat,
+    lng: lng,
+  };
+
+  const MiniMap = withScriptjs(
+    withGoogleMap((props) => (
+      <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}>
+        <Marker position={{ lat: -34.397, lng: 150.644 }} />
+      </GoogleMap>
+    ))
+  );
+
+  const loadingElementStyle2 = { height: "100%" };
+  const containerElementStyle2 = { height: `100%` };
+  const mapElementStyle2 = { height: "100%" };
 
   useEffect(() => {
     console.log(router.query.id);
@@ -66,8 +101,8 @@ export default function Game() {
     const res = await fetch(`/api/getrandomstreetview`);
     const location = await res.json();
     router.push(
-      `/multiplayer?lat=${location.lat}&lng=${location.long}?&id=${id}`,
-      `/multiplayer?lat=${location.lat}&lng=${location.long}?&id=${id}`,
+      `/multiplayer?lat=${location.lat}&lng=${location.long}&id=${id}`,
+      `/multiplayer?lat=${location.lat}&lng=${location.long}&id=${id}`,
       {
         shallow: true,
       }
@@ -84,8 +119,8 @@ export default function Game() {
 
   socket.on("newlocation", function ({ lat, lng }) {
     router.push(
-      `/multiplayer?lat=${lat}&lng=${lng}?&id=${id}`,
-      `/multiplayer?lat=${lat}&lng=${lng}?&id=${id}`,
+      `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
+      `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
       {
         shallow: true,
       }
@@ -138,6 +173,15 @@ export default function Game() {
   });
 
   return (
+    <div>
+    <div className="minimap">
+    <MiniMap
+      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
+      loadingElement={<div style={loadingElementStyle2} />}
+      containerElement={<div style={containerElementStyle2} />}
+      mapElement={<div style={mapElementStyle2} />}
+    />
+  </div>
     <div className={styles.box}>
       <div className={styles.text}>
         <div className={hideMakeLobby}>
@@ -176,8 +220,10 @@ export default function Game() {
               );
             })}
           </div>
+
         </div>
       </div>
+    </div>
     </div>
   );
 }
