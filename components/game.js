@@ -15,6 +15,7 @@ export default function Game() {
   const [showLobby, setShowLobby] = useState(styles.hidden);
   const [showPlaying, setShowPlaying] = useState(styles.hidden);
   const [players, setPlayers] = useState([]);
+  const [results, seResults] = useState({ caelan: 2329138, dev: 39204823 });
   const [id, setId] = useState("");
   const [guess, setGuess] = useState("");
   let playersArr = [players];
@@ -152,6 +153,16 @@ export default function Game() {
             onChange={changeGuess}
           ></input>
           <button onClick={sendGuess}>guess</button>
+          <div>
+            {Object.entries(results).map(([key, value]) => {
+              return (
+                <div>
+                  {key}
+                  <h1>{value}m</h1>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
