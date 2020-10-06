@@ -100,6 +100,7 @@ export default function Game() {
   });
 
   async function startGame() {
+    setResults({});
     const res = await fetch(`/api/getrandomstreetview`);
     const location = await res.json();
     router.push(
@@ -176,56 +177,56 @@ export default function Game() {
 
   return (
     <div>
-    <div className="minimap">
-    <MiniMap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
-      loadingElement={<div style={loadingElementStyle2} />}
-      containerElement={<div style={containerElementStyle2} />}
-      mapElement={<div style={mapElementStyle2} />}
-    />
-  </div>
-    <div className={styles.box}>
-      <div className={styles.text}>
-        <div className={hideMakeLobby}>
-          <h1>Username</h1>
-          <input
-            className={styles.form}
-            value={username}
-            onChange={setUser}
-          ></input>
-          <button onClick={putUsername}>make lobby</button>
-        </div>
-        <div className={showLobby}>
-          <h1>Lobby</h1>
-          <ol>
-            {players.map((players) => (
-              <li>{players}</li>
-            ))}
-          </ol>
-          <button onClick={startGame}>start</button>
-        </div>
-        <div className={showPlaying}>
-          <h1>Where is it</h1>
-          <input
-            className={styles.form}
-            value={guess}
-            onChange={changeGuess}
-          ></input>
-          <button onClick={sendGuess}>guess</button>
-          <div className={styles.score}>
-            {Object.entries(results).map(([key, value]) => {
-              return (
-                <div>
-                  {key}
-                  <h1>{value}mi</h1>
-                </div>
-              );
-            })}
+      <div className="minimap">
+        <MiniMap
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
+          loadingElement={<div style={loadingElementStyle2} />}
+          containerElement={<div style={containerElementStyle2} />}
+          mapElement={<div style={mapElementStyle2} />}
+        />
+      </div>
+      <div className={styles.box}>
+        <div className={styles.text}>
+          <div className={hideMakeLobby}>
+            <h1>Username</h1>
+            <input
+              className={styles.form}
+              value={username}
+              onChange={setUser}
+            ></input>
+            <button onClick={putUsername}>make lobby</button>
           </div>
-
+          <div className={showLobby}>
+            <h1>Lobby</h1>
+            <ol>
+              {players.map((players) => (
+                <li>{players}</li>
+              ))}
+            </ol>
+            <button onClick={startGame}>start</button>
+          </div>
+          <div className={showPlaying}>
+            <h1>Where is it</h1>
+            <input
+              className={styles.form}
+              value={guess}
+              onChange={changeGuess}
+            ></input>
+            <button onClick={sendGuess}>guess</button>
+            <button onClick={startGame}>another location</button>
+            <div className={styles.score}>
+              {Object.entries(results).map(([key, value]) => {
+                return (
+                  <div>
+                    {key}
+                    <h1>{value}mi</h1>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
