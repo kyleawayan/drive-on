@@ -18,6 +18,8 @@ export default function Game() {
   const [results, setResults] = useState({});
   const [id, setId] = useState("");
   const [guess, setGuess] = useState("");
+  const guessRef = useRef(guess);
+  guessRef.current = guess;
   const [guessesIn, setGuessesIn] = useState(0);
   let playersArr = [players];
 
@@ -109,21 +111,24 @@ export default function Game() {
     })
       .then((res) => res.text())
       .then((body) => {
-        const distance = JSON.parse(body).distance;
+        const distance = JSON.parse(body);
         console.log(distance);
         socket.emit("guesslocation", {
           room: id,
 
           username: username,
 
-          distance: distance,
+          distance: distance.distance,
+
+          guess: distance.guess,
         });
       });
   }
 
-  socket.on("results", function ({ username, distance }) {
-    console.log(username, distance);
-    var newResult = { [username]: distance };
+  socket.on("results", function ({ username, distance, typedguess }) {
+    console.log(typedguess);
+    var key = `${username}: ${typedguess}`;
+    var newResult = { [key]: distance };
     var newResults = Object.assign({}, results, newResult);
     setResults(newResults);
   });

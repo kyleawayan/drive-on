@@ -27,7 +27,12 @@ export default (req, res) => {
     );
     const distancemi = geolib.convertDistance(distance, "mi");
     console.log(distancemi);
-    res.end(JSON.stringify({ distance: distancemi }));
+    res.end(
+      JSON.stringify({
+        distance: distancemi,
+        guess: req.body.guessedplace,
+      })
+    );
   }
   getDistance();
 };
