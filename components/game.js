@@ -13,8 +13,10 @@ export default function Game() {
   const [username, setUsername] = useState("");
   const [hideMakeLobby, setHideMakeLobby] = useState(styles.makelobby);
   const [showLobby, setShowLobby] = useState(styles.hidden);
+  const [showPlaying, setShowPlaying] = useState(styles.hidden);
   const [players, setPlayers] = useState([]);
   const [id, setId] = useState("");
+  const [guess, setGuess] = useState("");
   let playersArr = [players];
 
   useEffect(() => {
@@ -66,6 +68,9 @@ export default function Game() {
         shallow: true,
       }
     );
+    setHideMakeLobby(styles.hidden);
+    setShowLobby(styles.hidden);
+    setShowPlaying(styles.playing);
     socket.emit("newlocation", {
       room: id,
       lat: location.lat,
@@ -81,6 +86,41 @@ export default function Game() {
         shallow: true,
       }
     );
+    setHideMakeLobby(styles.hidden);
+    setShowLobby(styles.hidden);
+    setShowPlaying(styles.playing);
+  });
+
+  function changeGuess(event) {
+    setGuess(event.target.value);
+  }
+
+  function sendGuess() {
+    fetch("/api/finddistance", {
+      method: "post",
+      body: JSON.stringify({
+        guessedplace: guess,
+        lat: router.query.lat,
+        long: router.query.lng,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.text())
+      .then((body) => {
+        const distance = JSON.parse(body).distance;
+        console.log(distance);
+        socket.emit("guesslocation", {
+          room: id,
+
+          username: username,
+
+          distance: distance,
+        });
+      });
+  }
+
+  socket.on("results", function ({ username, distance }) {
+    console.log(username, distance);
   });
 
   return (
@@ -96,13 +136,22 @@ export default function Game() {
           <button onClick={putUsername}>make lobby</button>
         </div>
         <div className={showLobby}>
-          <h1>loby</h1>
+          <h1>Lobby</h1>
           <ol>
             {players.map((players) => (
               <li>{players}</li>
             ))}
           </ol>
           <button onClick={startGame}>start</button>
+        </div>
+        <div className={showPlaying}>
+          <h1>Where is it</h1>
+          <input
+            className={styles.form}
+            value={guess}
+            onChange={changeGuess}
+          ></input>
+          <button onClick={sendGuess}>guess</button>
         </div>
       </div>
     </div>

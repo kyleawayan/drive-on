@@ -1,0 +1,32 @@
+const NodeGeocoder = require("node-geocoder");
+const geolib = require("geolib");
+
+const options = {
+  provider: "google",
+  apiKey: "AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw", // for Mapquest, OpenCage, Google Premier
+  formatter: null, // 'gpx', 'string', ...
+};
+
+// const guessedPlace = "austraila";
+// const lat = -34.29944;
+// const long = 146.08443;
+
+const geocoder = NodeGeocoder(options);
+
+export default (req, res) => {
+  console.log(req.body);
+  async function getDistance() {
+    const guess = await geocoder.geocode(req.body.guessedplace);
+    console.log(guess);
+    const distance = geolib.getDistance(
+      { latitude: req.body.lat, longitude: req.body.long },
+      {
+        latitude: guess[0].latitude,
+        longitude: guess[0].longitude,
+      }
+    );
+    console.log(distance);
+    res.end(JSON.stringify({ distance: distance }));
+  }
+  getDistance();
+};

@@ -56,6 +56,11 @@
     border-bottom: 2px solid white;
   }
 
+
 .hidden {
   display: none
+}
+
+.playing {
+
 }
