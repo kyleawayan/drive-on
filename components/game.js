@@ -50,7 +50,7 @@ export default function Game() {
 
   const MiniMap = withScriptjs(
     withGoogleMap((props) => (
-      <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}>
+      <GoogleMap defaultZoom={4} defaultCenter={defaultCenter}>
         <Marker position={{ lat: -34.397, lng: 150.644 }} />
       </GoogleMap>
     ))
