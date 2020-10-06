@@ -44,8 +44,8 @@ export default function Game() {
   });
   console.log(lat, lng);
   const defaultCenter = {
-    lat: lat,
-    lng: lng,
+    lat: lat + Math.random() < 0.5 ? -1 : 1,
+    lng: lng + Math.random() < 0.5 ? -1 : 1,
   };
 
   const MiniMap = withScriptjs(
