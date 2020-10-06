@@ -121,6 +121,7 @@ export default function Game() {
   }
 
   socket.on("newlocation", function ({ lat, lng }) {
+    setResults({});
     router.push(
       `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
       `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
