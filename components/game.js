@@ -122,6 +122,10 @@ export default function Game() {
 
           guess: distance.guess,
         });
+        var key = `${username}: ${distance.guess}`;
+        var newResult = { [key]: distance.distance };
+        var newResults = Object.assign({}, results, newResult);
+        setResults(newResults);
       });
   }
 
