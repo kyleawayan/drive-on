@@ -25,8 +25,9 @@ export default (req, res) => {
         longitude: guess[0].longitude,
       }
     );
-    console.log(distance);
-    res.end(JSON.stringify({ distance: distance }));
+    const distancemi = geolib.convertDistance(distance, "mi");
+    console.log(distancemi);
+    res.end(JSON.stringify({ distance: distancemi }));
   }
   getDistance();
 };

@@ -15,9 +15,10 @@ export default function Game() {
   const [showLobby, setShowLobby] = useState(styles.hidden);
   const [showPlaying, setShowPlaying] = useState(styles.hidden);
   const [players, setPlayers] = useState([]);
-  const [results, seResults] = useState({ caelan: 2329138, dev: 39204823 });
+  const [results, setResults] = useState({});
   const [id, setId] = useState("");
   const [guess, setGuess] = useState("");
+  const [guessesIn, setGuessesIn] = useState(0);
   let playersArr = [players];
 
   useEffect(() => {
@@ -122,6 +123,9 @@ export default function Game() {
 
   socket.on("results", function ({ username, distance }) {
     console.log(username, distance);
+    var newResult = { [username]: distance };
+    var newResults = Object.assign({}, results, newResult);
+    setResults(newResults);
   });
 
   return (
@@ -153,12 +157,12 @@ export default function Game() {
             onChange={changeGuess}
           ></input>
           <button onClick={sendGuess}>guess</button>
-          <div>
+          <div className={styles.score}>
             {Object.entries(results).map(([key, value]) => {
               return (
                 <div>
                   {key}
-                  <h1>{value}m</h1>
+                  <h1>{value}mi</h1>
                 </div>
               );
             })}
