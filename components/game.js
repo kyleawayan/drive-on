@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import styles from "../styles/game.module.css";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
+const fetch = require("node-fetch");
 
 const io = require("socket.io-client");
 const socket = io("http://localhost:8000");
@@ -54,7 +55,17 @@ export default function Game() {
     setPlayers(joined);
   });
 
-  function startGame() {}
+  async function startGame() {
+    const res = await fetch(`/api/getrandomstreetview`);
+    const location = await res.json();
+    router.push(
+      `/multiplayer?lat=${location.lat}&lng=${location.long}`,
+      `/multiplayer?lat=${location.lat}&lng=${location.long}`,
+      {
+        shallow: true,
+      }
+    );
+  }
 
   return (
     <div className={styles.box}>
@@ -75,7 +86,7 @@ export default function Game() {
               <li>{players}</li>
             ))}
           </ol>
-          <button>start</button>
+          <button onClick={startGame}>start</button>
         </div>
       </div>
     </div>

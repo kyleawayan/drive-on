@@ -12,18 +12,20 @@ import {
 import Game from "../components/game";
 
 export default function Map({ location }) {
-  const [lat, setLat] = useState(38.044712);;
-  const [lng, setLng]  = useState(-122.162265);;
   const router = useRouter();
+
+  const [lat, setLat] = useState(38.044712);
+  const [lng, setLng] = useState(-122.162265);
+
   useEffect(() => {
-    setTimeout(() => {
-      if (router.query.lat !== undefined) {
-        setLat(parseFloat(router.query.lat));
-        setLng(parseFloat(router.query.lng));
-        console.log(router.query.lat, router.query.lng)
-      }
-    }, 500);
+    console.log(router.query.id);
+    if (router.query.lat !== undefined) {
+      setLat(parseFloat(router.query.lat));
+      setLng(parseFloat(router.query.lng));
+      console.log(router.query.lat, router.query.lng);
+    }
   });
+    console.log(lat,  lng);;
   const defaultCenter = {
     lat: lat,
     lng: lng,
