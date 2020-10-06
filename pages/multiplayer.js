@@ -1,5 +1,6 @@
-import absoluteUrl from "next-absolute-url";
+import { useState, useEffect } from "react";
 const fetch = require("node-fetch");
+import { useRouter } from "next/router";
 import {
   withScriptjs,
   withGoogleMap,
@@ -11,9 +12,21 @@ import {
 import Game from "../components/game";
 
 export default function Map({ location }) {
+  const [lat, setLat] = useState(38.044712);;
+  const [lng, setLng]  = useState(-122.162265);;
+  const router = useRouter();
+  useEffect(() => {
+    setTimeout(() => {
+      if (router.query.lat !== undefined) {
+        setLat(parseFloat(router.query.lat));
+        setLng(parseFloat(router.query.lng));
+        console.log(router.query.lat, router.query.lng)
+      }
+    }, 500);
+  });
   const defaultCenter = {
-    lat: parseFloat(location.lat),
-    lng: parseFloat(location.long),
+    lat: lat,
+    lng: lng,
   };
   const options = {
     disableDefaultUI: true,
@@ -46,12 +59,4 @@ export default function Map({ location }) {
       />
     </div>
   );
-}
-
-export async function getServerSideProps({ req }) {
-  const { origin } = absoluteUrl(req);
-  const res = await fetch(`${origin}/api/getrandomstreetview`);
-  const location = await res.json();
-
-  return { props: { location } };
 }

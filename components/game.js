@@ -22,7 +22,6 @@ export default function Game() {
         socket.join(id);
       });
     }
-    return () => socket.disconnect();
   }, []);
 
   function setUser(event) {
@@ -55,6 +54,8 @@ export default function Game() {
     setPlayers(joined);
   });
 
+  function startGame() {}
+
   return (
     <div className={styles.box}>
       <div className={styles.text}>
@@ -74,6 +75,7 @@ export default function Game() {
               <li>{players}</li>
             ))}
           </ol>
+          <button>start</button>
         </div>
       </div>
     </div>
