@@ -66,8 +66,8 @@ export default function Game() {
     const res = await fetch(`/api/getrandomstreetview`);
     const location = await res.json();
     router.push(
-      `/multiplayer?lat=${location.lat}&lng=${location.long}`,
-      `/multiplayer?lat=${location.lat}&lng=${location.long}`,
+      `/multiplayer?lat=${location.lat}&lng=${location.long}?&id=${id}`,
+      `/multiplayer?lat=${location.lat}&lng=${location.long}?&id=${id}`,
       {
         shallow: true,
       }
@@ -84,8 +84,8 @@ export default function Game() {
 
   socket.on("newlocation", function ({ lat, lng }) {
     router.push(
-      `/multiplayer?lat=${lat}&lng=${lng}`,
-      `/multiplayer?lat=${lat}&lng=${lng}`,
+      `/multiplayer?lat=${lat}&lng=${lng}?&id=${id}`,
+      `/multiplayer?lat=${lat}&lng=${lng}?&id=${id}`,
       {
         shallow: true,
       }

@@ -46,9 +46,20 @@ export default function Map({ location }) {
     ))
   );
 
+  const MiniMap = withScriptjs(
+    withGoogleMap((props) => (
+      <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}></GoogleMap>
+    ))
+  );
+
   const loadingElementStyle = { height: "100%" };
   const containerElementStyle = { height: "100vh" };
   const mapElementStyle = { height: "100%" };
+
+  
+  const loadingElementStyle2 = { height: "100%" };
+  const containerElementStyle2 = { height: `400px` };
+  const mapElementStyle2 = { height: "50%" };
 
   return (
     <div>
@@ -59,6 +70,14 @@ export default function Map({ location }) {
         containerElement={<div style={containerElementStyle} />}
         mapElement={<div style={mapElementStyle} />}
       />
+      <div className="minimap">
+        <MiniMap
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
+          loadingElement={<div style={loadingElementStyle2} />}
+          containerElement={<div style={containerElementStyle2} />}
+          mapElement={<div style={mapElementStyle2} />}
+        />
+      </div>
     </div>
   );
 }
