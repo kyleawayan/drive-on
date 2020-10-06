@@ -22,12 +22,15 @@ export default function Game() {
     setHideMakeLobby(styles.hidden);
     setShowLobby(styles.lobby);
     const id = nanoid(5);
-    socket.on("connection", (socket) => {
-      socket.join(id);
-    });
-    console.log(username);
+    // socket.on("connection", (socket) => {
+    //   socket.join(id);
+    // });
     socket.emit("event", username);
   }
+
+  socket.on("event", function (data) {
+    console.log(data);
+  });
 
   return (
     <div className={styles.box}>
