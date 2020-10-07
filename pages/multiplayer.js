@@ -25,7 +25,7 @@ export default function Map({ location }) {
       console.log(router.query.lat, router.query.lng);
     }
   });
-    console.log(lat,  lng);;
+  console.log(lat, lng);
   const defaultCenter = {
     lat: lat,
     lng: lng,
@@ -34,6 +34,7 @@ export default function Map({ location }) {
     disableDefaultUI: true,
     enableCloseButton: false,
   };
+
   const MyMapComponent = withScriptjs(
     withGoogleMap((props) => (
       <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}>
@@ -58,7 +59,6 @@ export default function Map({ location }) {
   const containerElementStyle = { height: "100vh" };
   const mapElementStyle = { height: "100%" };
 
-  
   const loadingElementStyle2 = { height: "100%" };
   const containerElementStyle2 = { height: `600px` };
   const mapElementStyle2 = { height: "50%" };
@@ -67,7 +67,7 @@ export default function Map({ location }) {
     <div>
       <Game />
       <MyMapComponent
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKwlZBFyOTmWNeW-ebwEfOrZR41yqmxmM"
         loadingElement={<div style={loadingElementStyle} />}
         containerElement={<div style={containerElementStyle} />}
         mapElement={<div style={mapElementStyle} />}

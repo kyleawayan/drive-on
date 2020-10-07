@@ -10,9 +10,13 @@ import {
   StreetViewPanorama,
   Marker,
 } from "react-google-maps";
+import MiniMap from "../components/minimap"
 
 const io = require("socket.io-client");
-const socket = io("https://drive-on-server.herokuapp.com", {
+// const socket = io("https://drive-on-server.herokuapp.com", {
+//   transport: ["websocket"],
+// });
+const socket = io("localhost:8000", {
   transport: ["websocket"],
 });
 console.log("connecting");
@@ -29,6 +33,8 @@ export default function Game() {
   const [guess, setGuess] = useState("");
   const guessRef = useRef(guess);
   const [lat, setLat] = useState(38.044712);
+  const [markerLat, setMarkerLat] = useState(38.044712);
+  const [markerLong, setMarkerLong] = useState(-122.162265);
   const [lng, setLng] = useState(-122.162265);
   guessRef.current = guess;
   const [guessesIn, setGuessesIn] = useState(0);
@@ -48,17 +54,10 @@ export default function Game() {
     lng: lng + (Math.random() < 0.5 ? -1 : 1) / 3,
   };
 
-  const MiniMap = withScriptjs(
-    withGoogleMap((props) => (
-      <GoogleMap defaultZoom={4} defaultCenter={defaultCenter}>
-        <Marker position={{ lat: -34.397, lng: 150.644 }} />
-      </GoogleMap>
-    ))
-  );
 
-  const loadingElementStyle2 = { height: "100%" };
-  const containerElementStyle2 = { height: `100%` };
-  const mapElementStyle2 = { height: "100%" };
+
+
+
 
   useEffect(() => {
     console.log(router.query.id);
@@ -178,14 +177,7 @@ export default function Game() {
 
   return (
     <div>
-      <div className="minimap">
-        <MiniMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
-          loadingElement={<div style={loadingElementStyle2} />}
-          containerElement={<div style={containerElementStyle2} />}
-          mapElement={<div style={mapElementStyle2} />}
-        />
-      </div>
+        <MiniMap></MiniMap>
       <div className={styles.box}>
         <div className={styles.text}>
           <div className={hideMakeLobby}>
