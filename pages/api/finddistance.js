@@ -16,13 +16,18 @@ const geocoder = NodeGeocoder(options);
 export default (req, res) => {
   console.log(req.body);
   async function getDistance() {
-    const guess = await geocoder.geocode(req.body.guessedplace);
+    // const guess = await geocoder.geocode(req.body.guessedplace);
+    const guess = req.body.guessedplace.split(',');
     console.log(guess);
     const distance = geolib.getDistance(
       { latitude: req.body.lat, longitude: req.body.long },
+                  //       {
+                  //         latitude: guess[0].latitude,
+                  //         longitude: guess[0].longitude,
+                  //       }
       {
-        latitude: guess[0].latitude,
-        longitude: guess[0].longitude,
+        latitude: guess[0],
+        longitude: guess[1],
       }
     );
     const distancemi = geolib.convertDistance(distance, "mi");

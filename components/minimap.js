@@ -28,6 +28,7 @@ export default function MiniMap() {
   const [markerLong, setMarkerLong] = useState(-122.162265);
   const [lng, setLng] = useState(-122.162265);
   const [guessesIn, setGuessesIn] = useState(0);
+  const [zoom, setZoom] = useState(4);
   let playersArr = [players];
 
   const changeInputValue = (newValue) => {
@@ -38,32 +39,38 @@ export default function MiniMap() {
   useEffect(() => {
     console.log(router.query.id);
     if (router.query.lat !== undefined) {
-      setLat(parseFloat(router.query.lat));
-      setLng(parseFloat(router.query.lng));
+      setLat(parseFloat(router.query.lat) + (Math.random() < 0.5 ? -1 : 1) / 3);
+      setLng(parseFloat(router.query.lng) + (Math.random() < 0.5 ? -1 : 1) / 3);
       console.log(router.query.lat, router.query.lng);
     }
   });
 
-  console.log(lat, lng);
-  const defaultCenter = {
-    lat: lat + (Math.random() < 0.5 ? -1 : 1) / 3,
-    lng: lng + (Math.random() < 0.5 ? -1 : 1) / 3,
-  };
+
 
   function makeMarker(newMark) {
     console.log(`${newMark.latLng.lat()}, ${newMark.latLng.lng()}`);
     // setGuess(`${newMark.latLng.lat()} ${newMark.latLng.lng()}`);
+    setMarkerLat(newMark.latLng.lat());
+    // setLat(newMark.latLng.lat());
+    setMarkerLong(newMark.latLng.lng());
+    // setLng(newMark.latLng.lng());
     changeInputValue(`${newMark.latLng.lat()}, ${newMark.latLng.lng()}`)
   }
+
+  console.log(lat, lng);
+  const defaultCenter = {
+    lat: lat,
+    lng: lng,
+  };
 
   const MiniMap = withScriptjs(
     withGoogleMap(() => (
       <GoogleMap
-        defaultZoom={4}
+        defaultZoom={zoom}
         defaultCenter={defaultCenter}
         onClick={makeMarker}
       >
-        <Marker position={{ lat: 0, lng: 0 }} />
+        <Marker position={{ lat: markerLat, lng: markerLong }} />
       </GoogleMap>
     ))
   );

@@ -148,7 +148,7 @@ export default function Game() {
     fetch("/api/finddistance", {
       method: "post",
       body: JSON.stringify({
-        guessedplace: guess,
+        guessedplace: state.miniMapChords,
         lat: router.query.lat,
         long: router.query.lng,
       }),
@@ -167,8 +167,8 @@ export default function Game() {
 
           guess: distance.guess,
         });
-        var key = `${username}: ${distance.guess}`;
-        var newResult = { [key]: distance.distance };
+        // var key = `${username}: ${distance.guess}`;
+        var newResult = { [username]: distance.distance };
         var newResults = Object.assign({}, results, newResult);
         setResults(newResults);
       });
@@ -176,8 +176,8 @@ export default function Game() {
 
   socket.on("results", function ({ username, distance, typedguess }) {
     console.log(typedguess);
-    var key = `${username}: ${typedguess}`;
-    var newResult = { [key]: distance };
+    // var key = `${username}: ${typedguess}`;
+    var newResult = { [username]: distance };
     var newResults = Object.assign({}, results, newResult);
     setResults(newResults);
   });
