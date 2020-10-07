@@ -10,7 +10,7 @@ import {
   StreetViewPanorama,
   Marker,
 } from "react-google-maps";
-import MiniMap from "../components/minimap"
+
 
 const io = require("socket.io-client");
 // const socket = io("https://drive-on-server.herokuapp.com", {
@@ -177,7 +177,6 @@ export default function Game() {
 
   return (
     <div>
-        <MiniMap></MiniMap>
       <div className={styles.box}>
         <div className={styles.text}>
           <div className={hideMakeLobby}>

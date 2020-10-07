@@ -10,6 +10,7 @@ import {
 } from "react-google-maps";
 // https://www.creative-tim.com/learning-lab/nextjs/react-google-maps/material-dashboard
 import Game from "../components/game";
+import MiniMap from "../components/minimap";
 
 export default function Map({ location }) {
   const router = useRouter();
@@ -47,14 +48,6 @@ export default function Map({ location }) {
     ))
   );
 
-  const MiniMap = withScriptjs(
-    withGoogleMap((props) => (
-      <GoogleMap defaultZoom={8} defaultCenter={defaultCenter}>
-        <Marker position={{ lat: -34.397, lng: 150.644 }} />
-      </GoogleMap>
-    ))
-  );
-
   const loadingElementStyle = { height: "100%" };
   const containerElementStyle = { height: "100vh" };
   const mapElementStyle = { height: "100%" };
@@ -66,6 +59,7 @@ export default function Map({ location }) {
   return (
     <div>
       <Game />
+      <MiniMap></MiniMap>
       <MyMapComponent
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKwlZBFyOTmWNeW-ebwEfOrZR41yqmxmM"
         loadingElement={<div style={loadingElementStyle} />}
