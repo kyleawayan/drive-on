@@ -12,7 +12,6 @@ import {
 // https://www.creative-tim.com/learning-lab/nextjs/react-google-maps/material-dashboard
 import Game from "../components/game";
 import MiniMap from "../components/minimap";
-import Bruh from "../components/bruh";
 // https://itnext.io/passing-data-between-sibling-components-in-react-using-context-api-and-react-hooks-fce60f12629a
 const initialState = {
   miniMapChords: "",
@@ -30,10 +29,7 @@ function reducer(state, action) {
   }
 }
 
-
-
-
-export default function Map({ location }) {
+export default function Bruh({ location }) {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [lat, setLat] = useState(38.044712);
@@ -79,13 +75,10 @@ export default function Map({ location }) {
 
   return (
     <div>
-      <Bruh />
-      <MyMapComponent
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKwlZBFyOTmWNeW-ebwEfOrZR41yqmxmM"
-        loadingElement={<div style={loadingElementStyle} />}
-        containerElement={<div style={containerElementStyle} />}
-        mapElement={<div style={mapElementStyle} />}
-      />
+      <AppContext.Provider value={{ state, dispatch }}>
+        <Game />
+        <MiniMap></MiniMap>
+      </AppContext.Provider>
     </div>
   );
 }

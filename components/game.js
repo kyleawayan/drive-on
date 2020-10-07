@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import { AppContext } from "../pages/multiplayer";
+import { AppContext } from "../components/bruh";
 import styles from "../styles/game.module.css";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
