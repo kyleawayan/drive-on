@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { AppContext } from "../components/minimap";
 import styles from "../styles/game.module.css";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
@@ -10,6 +11,7 @@ import {
   StreetViewPanorama,
   Marker,
 } from "react-google-maps";
+import MiniMap from "../components/minimap";
 
 
 const io = require("socket.io-client");
@@ -22,6 +24,11 @@ const socket = io("localhost:8000", {
 console.log("connecting");
 
 export default function Game() {
+  const { state, dispatch } = useContext(AppContext);
+
+  const changeInputValue = (newValue) => {
+    dispatch({ type: "UPDATE_INPUT", data: newValue });
+  };
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [hideMakeLobby, setHideMakeLobby] = useState(styles.makelobby);
@@ -175,6 +182,9 @@ export default function Game() {
     setResults(newResults);
   });
 
+  const mapCoordinates = React.useContext(MiniMap);
+  console.log(mapCoordinates);
+
   return (
     <div>
       <div className={styles.box}>
@@ -201,11 +211,13 @@ export default function Game() {
             <h1>Where is it</h1>
             <input
               className={styles.form}
-              value={guess}
+              value={state.miniMapChords}
               onChange={changeGuess}
             ></input>
             <button onClick={sendGuess}>guess</button>
             <button onClick={startGame}>another location</button>
+            <br></br>
+            <br></br>
             <div className={styles.score}>
               {Object.entries(results).map(([key, value]) => {
                 return (

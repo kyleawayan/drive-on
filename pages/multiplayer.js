@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
+export const AppContext = React.createContext();
 const fetch = require("node-fetch");
 import { useRouter } from "next/router";
 import {
@@ -11,10 +12,28 @@ import {
 // https://www.creative-tim.com/learning-lab/nextjs/react-google-maps/material-dashboard
 import Game from "../components/game";
 import MiniMap from "../components/minimap";
+// https://itnext.io/passing-data-between-sibling-components-in-react-using-context-api-and-react-hooks-fce60f12629a
+const initialState = {
+  miniMapChords: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "UPDATE_INPUT":
+      return {
+        miniMapChords: action.data,
+      };
+
+    default:
+      return initialState;
+  }
+}
+
+
 
 export default function Map({ location }) {
   const router = useRouter();
-
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [lat, setLat] = useState(38.044712);
   const [lng, setLng] = useState(-122.162265);
 
@@ -58,8 +77,10 @@ export default function Map({ location }) {
 
   return (
     <div>
-      <Game />
-      <MiniMap></MiniMap>
+      <AppContext.Provider value={{ state, dispatch }}>
+        <Game />
+        <MiniMap></MiniMap>
+      </AppContext.Provider>
       <MyMapComponent
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKwlZBFyOTmWNeW-ebwEfOrZR41yqmxmM"
         loadingElement={<div style={loadingElementStyle} />}
