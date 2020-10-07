@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import styles from "../styles/game.module.css";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
@@ -30,6 +30,15 @@ export default function MiniMap() {
   const [guessesIn, setGuessesIn] = useState(0);
   let playersArr = [players];
 
+  useEffect(() => {
+    console.log(router.query.id);
+    if (router.query.lat !== undefined) {
+      setLat(parseFloat(router.query.lat));
+      setLng(parseFloat(router.query.lng));
+      console.log(router.query.lat, router.query.lng);
+    }
+  });
+
   console.log(lat, lng);
   const defaultCenter = {
     lat: lat + (Math.random() < 0.5 ? -1 : 1) / 3,
@@ -38,17 +47,17 @@ export default function MiniMap() {
 
   function makeMarker(newMark) {
     console.log(`${newMark.latLng.lat()}, ${newMark.latLng.lng()}`);
-    setGuess(`${newMark.latLng.lat()} ${newMark.latLng.lng()}`);
+    // setGuess(`${newMark.latLng.lat()} ${newMark.latLng.lng()}`);
   }
 
   const MiniMap = withScriptjs(
-    withGoogleMap((props) => (
+    withGoogleMap(() => (
       <GoogleMap
         defaultZoom={4}
         defaultCenter={defaultCenter}
         onClick={makeMarker}
       >
-        <Marker position={{ lat: markerLat, lng: markerLong }} />
+        <Marker position={{ lat: 0, lng: 0 }} />
       </GoogleMap>
     ))
   );
