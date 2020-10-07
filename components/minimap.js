@@ -80,16 +80,15 @@ export default function MiniMap() {
   const mapElementStyle2 = { height: "100%" };
 
   return (
-      <div>
-
-    <div className="minimap">
-      <MiniMap
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKwlZBFyOTmWNeW-ebwEfOrZR41yqmxmM"
-        loadingElement={<div style={loadingElementStyle2} />}
-        containerElement={<div style={containerElementStyle2} />}
-        mapElement={<div style={mapElementStyle2} />}
-      />
-    </div>
+    <div>
+      <div className="minimap">
+        <MiniMap
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
+          loadingElement={<div style={loadingElementStyle2} />}
+          containerElement={<div style={containerElementStyle2} />}
+          mapElement={<div style={mapElementStyle2} />}
+        />
+      </div>
     </div>
   );
 }

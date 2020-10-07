@@ -81,7 +81,7 @@ export default function Map({ location }) {
     <div>
       <Bruh />
       <MyMapComponent
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKwlZBFyOTmWNeW-ebwEfOrZR41yqmxmM"
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
         loadingElement={<div style={loadingElementStyle} />}
         containerElement={<div style={containerElementStyle} />}
         mapElement={<div style={mapElementStyle} />}
