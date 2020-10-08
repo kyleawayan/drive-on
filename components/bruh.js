@@ -47,7 +47,7 @@ const router = useRouter();
         socket.join(router.query.id);
       });
     }
-  });
+  }, []);
 
   useEffect(() => {
     console.log(router.query);

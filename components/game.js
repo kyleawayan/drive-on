@@ -54,7 +54,7 @@ export default function Game({lat, long}) {
         socket.join(router.query.id);
       });
     }
-  });
+  }, []);
 
   function setUser(event) {
     setUsername(event.target.value);
@@ -66,7 +66,9 @@ export default function Game({lat, long}) {
     if (router.query.id == undefined) {
       // new game (host)
       var id = nanoid(5);
-      router.push("/multiplayer", `/multiplayer?id=${id}`, { shallow: false });
+      router.push(`/multiplayer?id=${id}`, `/multiplayer?id=${id}`, {
+        shallow: true,
+      });
       socket.emit("room", id);
       playersArr.push(username);
       setPlayers(playersArr);
