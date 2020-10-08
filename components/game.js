@@ -53,7 +53,7 @@ export default function Game() {
 
   useEffect(() => {
     if (router.query.id !== undefined) {
-      socket.off('connection').on("connection", (socket) => {
+      socket.off("connection").on("connection", (socket) => {
         socket.join(id);
       });
     }
@@ -82,7 +82,7 @@ export default function Game() {
     }
   }
 
-  socket.off('newuser').on("newuser", function (data) {
+  socket.off("newuser").on("newuser", function (data) {
     var joined = players.concat(data);
     setPlayers(joined);
   });
@@ -108,15 +108,15 @@ export default function Game() {
       lng: location.long,
     });
   }
-  
-  socket.off('startnewlocation').on("startnewlocation", function (data) {
-   setResults({});
-   setHideMakeLobby(styles.hidden);
-   setShowLobby(styles.hidden);
-   setShowPlaying(styles.playing);
- });
 
- socket.off('newlocation').on("newlocation", function ({ lat, lng }) {
+  socket.off("startnewlocation").on("startnewlocation", function (data) {
+    setResults({});
+    setHideMakeLobby(styles.hidden);
+    setShowLobby(styles.hidden);
+    setShowPlaying(styles.playing);
+  });
+
+  socket.off("newlocation").on("newlocation", function ({ lat, lng }) {
     console.log(`new location: ${lat}, ${lng}`);
     const throttlePush = throttle(() => {
       router.push(
@@ -164,14 +164,14 @@ export default function Game() {
       });
   }
 
-  socket.off('results').on("results", function ({ username, distance, typedguess }) {
-    // var key = `${username}: ${typedguess}`;
-    var newResult = { [username]: distance };
-    var newResults = Object.assign({}, results, newResult);
-    setResults(newResults);
-  });
-
-  const mapCoordinates = React.useContext(MiniMap);
+  socket
+    .off("results")
+    .on("results", function ({ username, distance, typedguess }) {
+      // var key = `${username}: ${typedguess}`;
+      var newResult = { [username]: distance };
+      var newResults = Object.assign({}, results, newResult);
+      setResults(newResults);
+    });
 
   return (
     <div>
@@ -211,7 +211,7 @@ export default function Game() {
                 return (
                   <div>
                     {key}
-                    <h1>{value}mi</h1>
+                    <h1>{value.toFixed(2)}mi</h1>
                   </div>
                 );
               })}
