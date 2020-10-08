@@ -49,7 +49,7 @@ export default function MainMap({ location }) {
 
   return (
     <MyMapComponent
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb88IDIZNWC98UHnpvXrtZjYj8Y_dABKw"
+      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
       loadingElement={<div style={loadingElementStyle} />}
       containerElement={<div style={containerElementStyle} />}
       mapElement={<div style={mapElementStyle} />}

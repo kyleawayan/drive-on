@@ -62,7 +62,7 @@ export default function MiniMap() {
     <div>
       <div className="minimap">
         <MiniMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb88IDIZNWC98UHnpvXrtZjYj8Y_dABKw"
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
           loadingElement={<div style={loadingElementStyle2} />}
           containerElement={<div style={containerElementStyle2} />}
           mapElement={<div style={mapElementStyle2} />}

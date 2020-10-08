@@ -9,12 +9,12 @@ var throttle = require("lodash.throttle");
 
 //https://dev.to/bravemaster619/how-to-prevent-multiple-socket-connections-and-events-in-react-531d
 const io = require("socket.io-client");
-// const socket = io("https://driveonserver.kylan.io", {
-//   transport: ["websocket"],
-// });
- const socket = io("localhost:8000", {
+ const socket = io("https://driveonserver.kylan.io", {
    transport: ["websocket"],
  });
+// const socket = io("localhost:8000", {
+//   transport: ["websocket"],
+// });
 
 export default function Game() {
   const { state, dispatch } = useContext(AppContext);
