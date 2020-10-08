@@ -94,6 +94,7 @@ export default function Game() {
 
   async function startGame() {
     setResults({});
+    socket.emit("startnewlocation", router.query.id);
     const res = await fetch(`/api/getrandomstreetview`);
     const location = await res.json();
     router.push(
@@ -113,8 +114,15 @@ export default function Game() {
     });
   }
 
-  socket.on("newlocation", function ({ lat, lng }) {
+  socket.on("startnewlocation", function (data) {
+    console.log(data);
     setResults({});
+    setHideMakeLobby(styles.hidden);
+    setShowLobby(styles.hidden);
+    setShowPlaying(styles.playing);
+  });
+
+  socket.on("newlocation", function ({ lat, lng }) {
     router.push(
       `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
       `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
@@ -122,9 +130,6 @@ export default function Game() {
         shallow: true,
       }
     );
-    setHideMakeLobby(styles.hidden);
-    setShowLobby(styles.hidden);
-    setShowPlaying(styles.playing);
   });
 
   function changeGuess(event) {
