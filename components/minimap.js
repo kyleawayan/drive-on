@@ -1,40 +1,25 @@
-import { useState, useEffect, useRef, useCallback, useContext} from "react";
+import { useState, useEffect, useRef, useCallback, useContext } from "react";
 import { AppContext } from "../components/bruh";
-import styles from "../styles/game.module.css";
-import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
-const fetch = require("node-fetch");
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  StreetViewPanorama,
   Marker,
 } from "react-google-maps";
 
 export default function MiniMap() {
   const router = useRouter();
-  const {state, dispatch} = useContext(AppContext);
-  const [username, setUsername] = useState("");
-  const [hideMakeLobby, setHideMakeLobby] = useState(styles.makelobby);
-  const [showLobby, setShowLobby] = useState(styles.hidden);
-  const [showPlaying, setShowPlaying] = useState(styles.hidden);
-  const [players, setPlayers] = useState([]);
-  const [results, setResults] = useState({});
-  const [id, setId] = useState("");
-  const [guessedCoordinates, setGuessedCoordinates] = useState("");
+  const { state, dispatch } = useContext(AppContext);
   const [lat, setLat] = useState(38.044712);
   const [markerLat, setMarkerLat] = useState(38.044712);
   const [markerLong, setMarkerLong] = useState(-122.162265);
   const [lng, setLng] = useState(-122.162265);
-  const [guessesIn, setGuessesIn] = useState(0);
   const [zoom, setZoom] = useState(4);
-  let playersArr = [players];
 
   const changeInputValue = (newValue) => {
-
-    dispatch({ type: 'UPDATE_INPUT', data: newValue,});
-};
+    dispatch({ type: "UPDATE_INPUT", data: newValue });
+  };
 
   useEffect(() => {
     console.log(router.query.id);
@@ -45,8 +30,6 @@ export default function MiniMap() {
     }
   });
 
-
-
   function makeMarker(newMark) {
     console.log(`${newMark.latLng.lat()}, ${newMark.latLng.lng()}`);
     // setGuess(`${newMark.latLng.lat()} ${newMark.latLng.lng()}`);
@@ -54,7 +37,7 @@ export default function MiniMap() {
     // setLat(newMark.latLng.lat());
     setMarkerLong(newMark.latLng.lng());
     // setLng(newMark.latLng.lng());
-    changeInputValue(`${newMark.latLng.lat()}, ${newMark.latLng.lng()}`)
+    changeInputValue(`${newMark.latLng.lat()}, ${newMark.latLng.lng()}`);
   }
 
   console.log(lat, lng);

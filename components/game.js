@@ -4,20 +4,12 @@ import styles from "../styles/game.module.css";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 const fetch = require("node-fetch");
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  StreetViewPanorama,
-  Marker,
-} from "react-google-maps";
 import MiniMap from "../components/minimap";
 
-
- const io = require("socket.io-client");
- const socket = io("https://driveonserver.kylan.io", {
-   transport: ["websocket"],
- });
+const io = require("socket.io-client");
+const socket = io("https://driveonserver.kylan.io", {
+  transport: ["websocket"],
+});
 // const socket = io("localhost:8000", {
 //   transport: ["websocket"],
 // });
@@ -60,11 +52,6 @@ export default function Game() {
     lat: lat + (Math.random() < 0.5 ? -1 : 1) / 3,
     lng: lng + (Math.random() < 0.5 ? -1 : 1) / 3,
   };
-
-
-
-
-
 
   useEffect(() => {
     console.log(router.query.id);
