@@ -15,7 +15,7 @@ import MiniMap from "../components/minimap";
 
 
  const io = require("socket.io-client");
- const socket = io("https://drive-on-server.herokuapp.com", {
+ const socket = io("https://driveonserver.kylan.io", {
    transport: ["websocket"],
  });
 // const socket = io("localhost:8000", {
