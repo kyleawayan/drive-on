@@ -1,17 +1,17 @@
-const NodeGeocoder = require("node-geocoder");
+// const NodeGeocoder = require("node-geocoder");
 const geolib = require("geolib");
 
-const options = {
-  provider: "google",
-  apiKey: process.env.finddistancegooglekey, // for Mapquest, OpenCage, Google Premier
-  formatter: null, // 'gpx', 'string', ...
-};
+// const options = {
+//   provider: "google",
+//   apiKey: process.env.finddistancegooglekey, // for Mapquest, OpenCage, Google Premier
+//   formatter: null, // 'gpx', 'string', ...
+// };
 
 // const guessedPlace = "austraila";
 // const lat = -34.29944;
 // const long = 146.08443;
 
-const geocoder = NodeGeocoder(options);
+// const geocoder = NodeGeocoder(options);
 
 export default (req, res) => {
   console.log(req.body);

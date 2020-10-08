@@ -17,14 +17,12 @@ export default function MainMap({ location }) {
   const [lng, setLng] = useState(-122.162265);
 
   useEffect(() => {
-    console.log(router.query.id);
     if (router.query.lat !== undefined) {
       setLat(parseFloat(router.query.lat));
       setLng(parseFloat(router.query.lng));
-      console.log(router.query.lat, router.query.lng);
     }
   });
-  console.log(lat, lng);
+
   const defaultCenter = {
     lat: lat,
     lng: lng,
@@ -52,7 +50,7 @@ export default function MainMap({ location }) {
 
   return (
     <MyMapComponent
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw"
+      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb88IDIZNWC98UHnpvXrtZjYj8Y_dABKw"
       loadingElement={<div style={loadingElementStyle} />}
       containerElement={<div style={containerElementStyle} />}
       mapElement={<div style={mapElementStyle} />}
