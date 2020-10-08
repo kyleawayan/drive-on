@@ -5,15 +5,16 @@ import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 const fetch = require("node-fetch");
 import MiniMap from "../components/minimap";
+var throttle = require("lodash.throttle");
 
+//https://dev.to/bravemaster619/how-to-prevent-multiple-socket-connections-and-events-in-react-531d
 const io = require("socket.io-client");
-const socket = io("https://driveonserver.kylan.io", {
-  transport: ["websocket"],
-});
-// const socket = io("localhost:8000", {
+// const socket = io("https://driveonserver.kylan.io", {
 //   transport: ["websocket"],
 // });
-console.log("connecting");
+ const socket = io("localhost:8000", {
+   transport: ["websocket"],
+ });
 
 export default function Game() {
   const { state, dispatch } = useContext(AppContext);
@@ -40,23 +41,19 @@ export default function Game() {
   let playersArr = [players];
 
   useEffect(() => {
-    console.log(router.query.id);
     if (router.query.lat !== undefined) {
       setLat(parseFloat(router.query.lat));
       setLng(parseFloat(router.query.lng));
-      console.log(router.query.lat, router.query.lng);
     }
   });
-  console.log(lat, lng);
   const defaultCenter = {
     lat: lat + (Math.random() < 0.5 ? -1 : 1) / 3,
     lng: lng + (Math.random() < 0.5 ? -1 : 1) / 3,
   };
 
   useEffect(() => {
-    console.log(router.query.id);
     if (router.query.id !== undefined) {
-      socket.on("connection", (socket) => {
+      socket.off('connection').on("connection", (socket) => {
         socket.join(id);
       });
     }
@@ -81,13 +78,11 @@ export default function Game() {
       // joining existing server (player)
       socket.emit("room", router.query.id);
       setId(router.query.id);
-      console.log(id, username);
       socket.emit("newuser", { room: router.query.id, username: username });
     }
   }
 
-  socket.on("newuser", function (data) {
-    console.log(data);
+  socket.off('newuser').on("newuser", function (data) {
     var joined = players.concat(data);
     setPlayers(joined);
   });
@@ -113,23 +108,26 @@ export default function Game() {
       lng: location.long,
     });
   }
+  
+  socket.off('startnewlocation').on("startnewlocation", function (data) {
+   setResults({});
+   setHideMakeLobby(styles.hidden);
+   setShowLobby(styles.hidden);
+   setShowPlaying(styles.playing);
+ });
 
-  socket.on("startnewlocation", function (data) {
-    console.log(data);
-    setResults({});
-    setHideMakeLobby(styles.hidden);
-    setShowLobby(styles.hidden);
-    setShowPlaying(styles.playing);
-  });
-
-  socket.on("newlocation", function ({ lat, lng }) {
-    router.push(
-      `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
-      `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
-      {
-        shallow: true,
-      }
-    );
+ socket.off('newlocation').on("newlocation", function ({ lat, lng }) {
+    console.log(`new location: ${lat}, ${lng}`);
+    const throttlePush = throttle(() => {
+      router.push(
+        `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
+        `/multiplayer?lat=${lat}&lng=${lng}&id=${id}`,
+        {
+          shallow: true,
+        }
+      );
+    }, 1000);
+    throttlePush();
   });
 
   function changeGuess(event) {
@@ -166,8 +164,7 @@ export default function Game() {
       });
   }
 
-  socket.on("results", function ({ username, distance, typedguess }) {
-    console.log(typedguess);
+  socket.off('results').on("results", function ({ username, distance, typedguess }) {
     // var key = `${username}: ${typedguess}`;
     var newResult = { [username]: distance };
     var newResults = Object.assign({}, results, newResult);
@@ -175,7 +172,6 @@ export default function Game() {
   });
 
   const mapCoordinates = React.useContext(MiniMap);
-  console.log(mapCoordinates);
 
   return (
     <div>

@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 export const AppContext = React.createContext();
 import Game from "../components/game";
+
 // https://itnext.io/passing-data-between-sibling-components-in-react-using-context-api-and-react-hooks-fce60f12629a
 const initialState = {
   miniMapChords: "",
@@ -20,13 +21,15 @@ function reducer(state, action) {
   }
 }
 
-export default function Bruh({ location }) {
+
+
+export default function Bruh() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <div>
       <AppContext.Provider value={{ state, dispatch }}>
-        <Game />
+        <Game  />
         <MiniMap></MiniMap>
       </AppContext.Provider>
     </div>
