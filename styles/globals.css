@@ -58,3 +58,11 @@ a {
   width: 25%;
   height: 100vh
 }
+
+.paste {
+  position: fixed ;
+  z-index: 3;
+  right: 0px;
+  top: 60px;
+  width: 25%;
+}

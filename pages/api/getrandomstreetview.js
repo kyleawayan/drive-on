@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const { parseString } = require("xml2js");
 
 export default (req, res) => {
-  // res.end(JSON.stringify({ lat: 38.044712, long: -122.162265 }));
+  // res.end(JSON.stringify({ lat: 39.339414, long: -90.581311 }));
   var latt;
   var longt;
 
@@ -23,7 +23,7 @@ export default (req, res) => {
 
   function checkIfStreetView() {
     fetch(
-      `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${latt},${longt}&key=AIzaSyDKwlZBFyOTmWNeW-ebwEfOrZR41yqmxmM`
+      `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${latt},${longt}&key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw`
     )
       .then((res) => res.text())
       .then((body) => {
@@ -36,4 +36,4 @@ export default (req, res) => {
         }
       });
   }
-};;;;
+};;;;;

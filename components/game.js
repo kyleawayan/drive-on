@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { AppContext } from "../components/bruh";
 import styles from "../styles/game.module.css";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
@@ -10,18 +11,24 @@ import {
   StreetViewPanorama,
   Marker,
 } from "react-google-maps";
+import MiniMap from "../components/minimap";
 
 
-const io = require("socket.io-client");
-// const socket = io("https://drive-on-server.herokuapp.com", {
+ const io = require("socket.io-client");
+ const socket = io("https://drive-on-server.herokuapp.com", {
+   transport: ["websocket"],
+ });
+// const socket = io("localhost:8000", {
 //   transport: ["websocket"],
 // });
-const socket = io("localhost:8000", {
-  transport: ["websocket"],
-});
 console.log("connecting");
 
 export default function Game() {
+  const { state, dispatch } = useContext(AppContext);
+
+  const changeInputValue = (newValue) => {
+    dispatch({ type: "UPDATE_INPUT", data: newValue });
+  };
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [hideMakeLobby, setHideMakeLobby] = useState(styles.makelobby);
@@ -141,7 +148,7 @@ export default function Game() {
     fetch("/api/finddistance", {
       method: "post",
       body: JSON.stringify({
-        guessedplace: guess,
+        guessedplace: state.miniMapChords,
         lat: router.query.lat,
         long: router.query.lng,
       }),
@@ -160,8 +167,8 @@ export default function Game() {
 
           guess: distance.guess,
         });
-        var key = `${username}: ${distance.guess}`;
-        var newResult = { [key]: distance.distance };
+        // var key = `${username}: ${distance.guess}`;
+        var newResult = { [username]: distance.distance };
         var newResults = Object.assign({}, results, newResult);
         setResults(newResults);
       });
@@ -169,11 +176,14 @@ export default function Game() {
 
   socket.on("results", function ({ username, distance, typedguess }) {
     console.log(typedguess);
-    var key = `${username}: ${typedguess}`;
-    var newResult = { [key]: distance };
+    // var key = `${username}: ${typedguess}`;
+    var newResult = { [username]: distance };
     var newResults = Object.assign({}, results, newResult);
     setResults(newResults);
   });
+
+  const mapCoordinates = React.useContext(MiniMap);
+  console.log(mapCoordinates);
 
   return (
     <div>
@@ -201,11 +211,13 @@ export default function Game() {
             <h1>Where is it</h1>
             <input
               className={styles.form}
-              value={guess}
+              value={state.miniMapChords}
               onChange={changeGuess}
             ></input>
             <button onClick={sendGuess}>guess</button>
             <button onClick={startGame}>another location</button>
+            <br></br>
+            <br></br>
             <div className={styles.score}>
               {Object.entries(results).map(([key, value]) => {
                 return (
