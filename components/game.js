@@ -94,7 +94,7 @@ export default function Game() {
 
   async function startGame() {
     setResults({});
-    socket.emit("startnewlocation", router.query.id);
+    socket.emit("startnewlocation", id);
     const res = await fetch(`/api/getrandomstreetview`);
     const location = await res.json();
     router.push(
