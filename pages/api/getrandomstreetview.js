@@ -23,8 +23,7 @@ export default (req, res) => {
 
   function checkIfStreetView() {
     fetch(
-      `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${latt},${longt}&key=AIzaSyBA958bNtc12uKxbXIUI1dTLWR44XnXxMw`
-    )
+      `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${latt},${longt}&key=AIzaSyA-2SUuUpop6l87nr2xXlqGPZiRMq0Sq3c`    )
       .then((res) => res.text())
       .then((body) => {
         console.log(body.length);
